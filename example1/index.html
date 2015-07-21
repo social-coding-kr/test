@@ -1,0 +1,42 @@
+ 
+<!-- include this stylesheet in your <head> -->
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+ 
+<!-- And the oldIE version of course. Just think, one day we'll no longer have to do this! -->
+<!--[if lte IE 8]>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.6.4/leaflet.ie.css" />
+<![endif]-->
+
+<style type="text/css">
+	#leafletmap {height: 200px;}
+</style>
+
+<h1>Building Interactive Maps with Leaflet &amp; the Geo&#8203;location API</h1>
+<div id="leafletmap"></div>
+
+ 
+<i class="fa fa-map-marker"></i>
+<button class="pure-button pure-button-primary">Get my location</button>
+ 
+<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+ 
+<script>	 
+var mymap = L.map('leafletmap');
+mymap.setView([40.775,-73.972], 15);
+
+L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+    maxZoom: 18
+}).addTo(mymap);
+
+$('.pure-button').on('click', function(){
+  mymap.locate({setView: true, maxZoom: 15});
+});
+
+mymap.on('locationfound', onLocationFound);
+function onLocationFound(e) {
+    L.marker(e.latlng).addTo(mymap);
+}	 
+
+</script>
+	 
